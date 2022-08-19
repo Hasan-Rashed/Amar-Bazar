@@ -1,6 +1,7 @@
 const Product = require('../models/productModel');
 const ErrorHandler = require('../utils/errorhandler');
-const catchAsyncErrors = require('../middleware/catchAsyncErrors')
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const ApiFeatures = require('../utils/apifeatures');
 
 
 
@@ -26,8 +27,20 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 /* catchAsyncErrors A middleware function that is used to handle errors of async functions. */
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
+    // module apifeatures is used to filter the products
+
+    const resultPerPage = 5;
+    const productCount = await Product.countDocument();
+
+
     
-    const products = await Product.find();
+    /* Filtering the products based on the query string. */
+    const apiFeature = new ApiFeatures(Product.find(), req.query) // query and queryStr parameter
+    .search() // search feature function
+    .filter() // filter feature function
+    .pagination(resultPerPage) // pagination feature function
+
+    const products = await apiFeature.query;
     
     res.status(200).json({
         success: true,
@@ -52,9 +65,11 @@ exports.getProductDetails = catchAsyncErrors(catchAsyncErrors(async (req, res, n
 
     res.status(200).json({
         success: true,
-        product
+        product,
+        ProductCount
     })
 }));
+
 
 
 
