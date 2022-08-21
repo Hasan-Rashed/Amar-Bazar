@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
         default: 0,
     },
 
-    images: [
+    images: [ // this is array because product has multiple images
         {
             public_id: {
                 type: String,

@@ -7,9 +7,15 @@ app.use(express.json());
 
 // Route Imports
 const product = require('./routes/productRoute');
+const user = require('./routes/userRoute');
+
 
 /* Telling the app to use the product route. */
 app.use('/api/v1', product);
+
+
+/* Telling the app to use the user route. */
+app.use('/api/v1', user);
 
 
 /* Error Handling Middleware */
