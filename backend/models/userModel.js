@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 
 
@@ -45,6 +47,49 @@ const userSchema = new mongoose.Schema({
 
     resetPasswordExpire: Date
 });
+
+
+
+
+
+// save is event, before saving userSchema encrypt password
+/* Encrypting the password before saving it to the database. */
+userSchema.pre('save', async function(next) { // using function keyword, arrow function doesn't support this keyword
+
+    /* Checking if the password is modified or not. If it is not modified, then it will not be hashed
+    again. */
+    if(!this.isModified('password')) {
+        next();
+    }
+    
+
+/* Encrypting the password before saving it to the database. */
+    this.password = await bcrypt.hash(this.password, 10); // 10 is the number of rounds of hashing | 10 character password
+});
+
+
+
+
+// JWT TOKEN
+/* The above code is creating a method for the userSchema. This method is called getJWTToken. This
+method is used to create a JWT token for the user. */
+userSchema.methods.getJWTToken = function() {
+
+    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE,
+    });
+};
+
+
+
+// Compare Password
+/* This is a method that is used to compare the password that is entered by the user with the
+password that is stored in the database. */
+userSchema.methods.comparePassword = async function(enteredPassword) {
+
+    return await bcrypt.compare(enteredPassword, this.password);
+}
+
 
 
 /* Exporting the model to be used in other files. */
