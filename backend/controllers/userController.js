@@ -32,6 +32,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
 
 // Login User
+/* This is a function that is used to login a user. */
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     /* Destructuring the email and password from the request body. */
@@ -66,4 +67,22 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     /* Sending the token to the user. */
     sendToken(user, 200, res);
+});
+
+
+
+
+
+// Logout User
+exports.logout = catchAsyncErrors(async(req, res, next) => {
+
+    res.cookie('token', null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    })
+
+    res.status(200).json({
+        success: true,
+        message: 'Logged out successfully'
+    })
 });

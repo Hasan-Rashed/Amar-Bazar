@@ -30,7 +30,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
     // module apifeatures is used to filter the products
 
     const resultPerPage = 5;
-    const productCount = await Product.countDocument();
+    const productCount = await Product.countDocuments();
 
 
     
