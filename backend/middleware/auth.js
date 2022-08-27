@@ -25,7 +25,7 @@ exports.isAuthenticatedUser = catchAsyncErrors( async(req, res, next) => {
 
 
     /* Finding the user in the database using the id that was decoded from the token. */
-    req.user = await User.findById(decodedData.id);
+    req.user = await User.findById(decodedData.id); // contains users all data
     
 
     /* Calling the next callback function. */
@@ -34,3 +34,20 @@ exports.isAuthenticatedUser = catchAsyncErrors( async(req, res, next) => {
 
 
 
+
+
+exports.authorizeRoles = (...roles) => { // (argument is admin) ...roles is a array
+
+    return (req, res, next) => {
+        
+        /* Checking if the user role is included in the roles array. ** array.includes() */
+        if(!roles.includes(req.user.role)) { // role is user or admin (req.user returns the user details and .role return role of user)
+
+            return next(
+                new ErrorHandler(`Role: ${req.user.role} is not authorized to access this resource.`, 403)
+            );
+        }
+
+        next(); // skip to the next middleware function
+    }
+}
