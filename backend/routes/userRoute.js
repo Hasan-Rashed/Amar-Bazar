@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, loginUser, logout } = require('../controllers/userController');
+const { registerUser, loginUser, logout, forgotPassword, resetPassword } = require('../controllers/userController');
 
 
 /* Creating a router object. */
@@ -15,8 +15,16 @@ router.route('/register').post(registerUser);
 router.route('/login').post(loginUser);
 
 
+/* This is a route for the forgot password page. */
+router.route('/password/forgot').post(forgotPassword);
+
+
+/* This is a route for the reset password page. */
+router.route('/password/reset/:token').put(resetPassword);
+
+
 /* Creating a route for the logout function. */
-router.route('/logout').all(logout);
+router.route('/logout').get(logout);
 
 
 module.exports = router;

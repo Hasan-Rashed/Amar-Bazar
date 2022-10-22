@@ -46,6 +46,11 @@ const userSchema = new mongoose.Schema({
         default: 'user' // default to user until make Admin
     },
 
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    },
+
     resetPasswordToken: String,
 
     resetPasswordExpire: Date
@@ -88,10 +93,9 @@ userSchema.methods.getJWTToken = function() {
 // Compare Password
 /* This is a method that is used to compare the password that is entered by the user with the
 password that is stored in the database. */
-userSchema.methods.comparePassword = async function(enteredPassword) {
-
-    return await bcrypt.compare(enteredPassword, this.password);
-}
+userSchema.methods.comparePassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+};
 
 
 
@@ -103,7 +107,7 @@ userSchema.methods.getResetPasswordToken = function() {
     const resetToken = crypto.randomBytes(20).toString('hex');
 
 
-    // Hashing and add to userSchema
+    // Hashing and adding resetPasswordToken to userSchema
     this.resetPasswordToken = crypto
         .createHash('sha256')
         .update(resetToken)

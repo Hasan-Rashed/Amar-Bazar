@@ -2,6 +2,8 @@ const ErrorHandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const User = require('../models/userModel');
 const sendToken = require('../utils/jwtToken')
+const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
 
 
 
@@ -56,7 +58,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     }
 
     /* Comparing the password that the user has given with the password that is stored in the database. */
-    const isPasswordMatched = user.comparePassword(password);
+    const isPasswordMatched = await user.comparePassword(password);
 
     /* Checking if the password that the user has given matches the password that is stored in the
     database. */
@@ -85,4 +87,114 @@ exports.logout = catchAsyncErrors(async(req, res, next) => {
         success: true,
         message: 'Logged out successfully'
     })
+});
+
+
+
+// Forgot Password
+/* This is a function that is used to send a reset password token to the user. */
+exports.forgotPassword = catchAsyncErrors(async(req, res, next) => {
+
+
+    /* Finding a user with the email address that was passed in. */
+    const user = await User.findOne({ email: req.body.email });
+
+
+    /* This is checking if the user exists. If not, then it will return an error. */
+    if (!user) {
+        return next(new ErrorHandler('There is no user with that email address', 404));
+    };
+
+
+    // Get ResetPassword Token
+    const resetToken = user.getResetPasswordToken();
+
+    /* Saving the user without validating the user. */
+    await user.save({ validateBeforeSave: false });
+
+
+    /* Creating a reset password url. ** req.protocol for http or https, req.get('host') for getting hostname */
+    const resetPasswordUrl = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
+
+    
+    /* Creating a message that will be sent to the user. */
+    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it`;
+
+    
+    /* If the email is sent successfully, then it will send a response to
+    the user. If not, then it will set the resetPasswordToken and resetPasswordExpire to undefined
+    and then save the user. */
+    try {
+        
+        await sendEmail({
+            email: user.email,
+            subject: 'Amar Bazar Password Reset',
+            message
+        });
+
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email} successfully`
+        })
+
+
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        /* Saving the user without validating the user. */
+        await user.save({ validateBeforeSave: false });
+
+        
+        return next(new ErrorHandler(error.message, 500))
+    }
+});
+
+
+
+
+// Reset Password
+/* Creating a hash of the reset password token. */
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+    const resetPasswordToken = crypto
+        .createHash('sha256')
+
+        /* `req.params.token` is getting the token from the url. */
+        .update(req.params.token)
+        
+        .digest('hex');
+
+        const user = await User.findOne({
+            resetPasswordToken: resetPasswordToken,
+            resetPasswordExpire: {$gt: Date.now()} // gt-> greaterThan
+        });
+
+
+        /* This is checking if the user exists. If not, then it will return an
+        error. */
+        if (!user) {
+            return next(new ErrorHandler('Reset Password Token is invalid or has been expired. Please try again!', 400));
+        };
+
+
+        /* This is checking if the password and confirm password are the same. If
+        not, then it will return an error. */
+        if(req.body.password !== req.body.confirmPassword){
+            return next(new ErrorHandler('Password does not match. Please try again!', 400));
+        }
+
+
+        /* Setting the password to the password that the user has given. */
+        user.password = req.body.password;
+
+        /* Setting the resetPasswordToken and resetPasswordExpire to undefined. */
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+
+        /* Saving the user. */
+        await user.save();
+
+        /* Sending the token to the user. */
+        sendToken(user, 200, res);
 });

@@ -1,0 +1,51 @@
+2:25:21 -> password error
+2:37:15 -> deocdedData error(invalid signature)
+3:12:06
+
+backend: 
+	1) app.js
+	2) server.js
+	
+	config:
+		3) config.env
+		6) database.js
+	
+	controllers:
+		4) productController.js
+			8) get
+			9) post
+			10) put
+			11) delete
+			12) getProductDetails
+		
+	routes:
+		5) productRoute.js
+		
+	models:
+		7) ProductModel.js
+		user and pass auth:	17) userModel.js 18) userController.js 19) userRoute.js
+		
+	utils:
+		13) errorhandler.js
+		16) apifeatures.js (related with productController)
+			search, filter, pagination features
+		20) jwtToken.js
+	
+	middleware:
+		14) error.js
+		15) catchAsyncErrors.js
+		21) auth.js -> isAuthenticatedUser(), authorizeRoles()
+		
+		
+
+user and password authentication
+----------------------------------
+	userModel.js -> bcrypt, JWT_TOKEN
+	config -> jwt_expire, jwt_secret
+	userController -> call
+	
+		
+		
+
+Errors: server(unhanledRejection -> promise, unCaughtException -> console logging something)
+		wrong mongodb id 
