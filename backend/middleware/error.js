@@ -17,6 +17,20 @@ module.exports = (err, req, res, next) => {
     }
     
 
+    // Wrong JWT error
+   /* This is a middleware function that is used to handle errors. */
+    if(err.name === 'JsonWebTokenError'){
+        const message = `Json Web Token is Invalid, Try again!}`;
+        err = new ErrorHandler(message, 400);
+    }
+
+    
+    if(err.name === 'TokenExpireError'){
+        const message = `Json Web Token is Expired, Try again!}`;
+        err = new ErrorHandler(message, 400);
+    }
+    
+
     res.status(err.statusCode).json({
         success: false,
         message: err.message
