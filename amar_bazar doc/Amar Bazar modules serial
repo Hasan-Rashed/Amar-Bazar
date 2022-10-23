@@ -1,6 +1,9 @@
+errors:
 2:25:21 -> password error
 2:37:15 -> deocdedData error(invalid signature)
-3:12:06
+3:22:56 -> mongoose duplicate key error (couldnot write)
+
+time: 3:12:06
 
 backend: 
 	1) app.js

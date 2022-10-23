@@ -198,3 +198,18 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
         /* Sending the token to the user. */
         sendToken(user, 200, res);
 });
+
+
+
+
+// Get User Detail
+/* This is a function that is used to get the user details. */
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true,
+        user
+    });
+});

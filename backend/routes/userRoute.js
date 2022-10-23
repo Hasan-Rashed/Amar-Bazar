@@ -1,5 +1,9 @@
 const express = require('express');
-const { registerUser, loginUser, logout, forgotPassword, resetPassword } = require('../controllers/userController');
+const { registerUser, loginUser, logout, forgotPassword, resetPassword, getUserDetails } = require('../controllers/userController');
+
+/* This is destructuring the isAuthenticateUser and authorizeRoles functions from
+the auth.js file. */
+const {isAuthenticateUser, authorizeRoles, isAuthenticatedUser} = require('../middleware/auth');
 
 
 /* Creating a router object. */
@@ -26,5 +30,7 @@ router.route('/password/reset/:token').put(resetPassword);
 /* Creating a route for the logout function. */
 router.route('/logout').get(logout);
 
+/* This is a route for the user to get their own details. */
+router.route('/me').get(isAuthenticatedUser, getUserDetails);
 
 module.exports = router;
