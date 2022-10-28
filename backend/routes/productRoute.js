@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllProducts, createProduct, updateProduct, deleteProduct, getProductDetails } = require('../controllers/productController');
+const { getAllProducts, createProduct, updateProduct, deleteProduct, getProductDetails, createProductReview, getProductReviews, deleteReview } = require('../controllers/productController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
 
@@ -14,16 +14,28 @@ router.route('/products').get(getAllProducts);
 
 
 /* Creating a route for the post request. */
-router.route('/product/new')
+router.route('/admin/product/new')
     .post(isAuthenticatedUser, authorizeRoles('admin'), createProduct); // isAuthenticatedUser is to check whether he is admin or not
 
 
 
 /* Creating a route for the put and delete request. */
-router.route('/product/:id')
+router.route('/admin/product/:id')
     .put(isAuthenticatedUser, authorizeRoles('admin'), updateProduct) // isAuthenticatedUser is to check whether he is admin or not
     .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteProduct) // isAuthenticatedUser is to check whether he is admin or not
-    .get(getProductDetails); // update, delete, productDetails url or api same
+
+
+/* A route for the get request. */
+router.route('/product/:id').get(getProductDetails); // update, delete, productDetails url or api same
+
+/* This is a route for the put request. */
+router.route('/review').put(isAuthenticatedUser, createProductReview);
+
+/* This is a route for the get request. */
+router
+    .route('/reviews')
+    .get(getProductReviews)
+    .delete(isAuthenticatedUser, deleteReview);
 
 
 module.exports = router;

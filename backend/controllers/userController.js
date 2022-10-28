@@ -63,7 +63,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     /* Checking if the password that the user has given matches the password that is stored in the
     database. */
     if (!isPasswordMatched) {
-        return next(new ErrorHandler('Invalid credentials', 401))
+        return next(new ErrorHandler('Invalid email or password', 401))
     }
 
 
@@ -206,10 +206,184 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 /* This is a function that is used to get the user details. */
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
+    /* Finding a user with the id that is stored in the token. */
     const user = await User.findById(req.user.id);
 
     res.status(200).json({
         success: true,
         user
     });
+});
+
+
+
+
+// Update User password
+/* This is a function that is used to get the user details. */
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+
+/* Finding a user with the id that is stored in the token and then selecting the
+password property. */
+    const user = await User.findById(req.user.id).select('+password');
+
+/* Comparing the password that the user has given with the password that is stored
+in the database. */
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    /* This is checking if the password that the user has given matches the
+    password that is stored in the database. */
+    if(!isPasswordMatched){
+        return next(new ErrorHandler('old password is not matched', 400));
+    }
+
+
+    /* This is checking if the password and confirm password are the same. If not,
+    then it will return an error. */
+    if(req.body.newPassword !== req.body.confirmPassword){
+        return next(new ErrorHandler('Password does not match', 400));
+    }
+
+
+/* Setting the password to the new password that the user has given. */
+    user.password = req.body.newPassword;
+
+    
+/* Saving the user. */
+    await user.save();
+
+
+/* Sending the token to the user. */
+    sendToken(user, 200, res);
+});
+
+
+
+
+// Update User Profile
+/* This is a function that is used to get the user details. */
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+
+    /* Creating a new user data object with the name, email, and role from the
+    request body. */
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    }
+
+    // we will add cloudinary later
+
+    /* This is updating the user with the id that is stored in the token with the
+    new user data. */
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+
+   /* Sending a response to the user. */
+    res.status(200).json({
+        success: true
+    });
+    
+});
+
+
+
+
+// Get all users (admin)
+exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
+    /* Getting all the users from the database. */
+    const users = await User.find();
+
+    /* This is sending a response to the user. */
+    res.status(200).json({
+        success: true,
+        users
+    });
+});
+
+
+
+// Get single user (admin)
+/* This is a function that is used to get a single user. */
+exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    /* This is checking if the user exists. If not, then it will return an error. */
+    if(!user){
+        return next(new ErrorHandler(`User does not exist with id: ${req.params.id}`))
+    }
+
+    res.status(200).json({
+        success: true,
+        user
+    });
+});
+
+
+
+
+// Update User Role -- Admin
+/* This is a function that is used to get the user details. */
+exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
+
+   /* Creating a new user data object with the name, email, and role from the
+   request body. */
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+
+
+    /* This is updating the user with the id that is stored in the token with the
+    new user data. */
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+
+    /* This is checking if the user exists. If not, then it will return an error. */
+    if(!user){
+        return next(new ErrorHandler(`User role has been updated with id: ${req.params.id}`, 400));
+    }
+
+
+    res.status(200).json({
+        success: true
+    });
+    
+});
+
+
+
+
+// Delete User --Admin
+/* This is a function that is used to get the user details. */
+exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
+
+/* Finding a user with the id that is passed in the url. */
+    const user = await User.findById(req.params.id);
+    
+    // we will remove cloudinary later
+
+    /* This is checking if the user exists. If not, then it will return an error. */
+    if(!user){
+        return next(new ErrorHandler(`User does not exist with id: ${req.params.id}`, 400));
+    }
+
+
+/* Removing the user from the database. */
+    await user.remove();
+
+
+    /* This is sending a response to the user. */
+    res.status(200).json({
+        success: true,
+        message: "User deleted successfully"
+    });
+    
 });

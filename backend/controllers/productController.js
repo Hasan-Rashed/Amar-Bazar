@@ -81,31 +81,37 @@ exports.getProductDetails = catchAsyncErrors(catchAsyncErrors(async (req, res, n
 
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => { 
 
+/* Finding the product by the id. */
     let product = await Product.findById(req.params.id);
 
     // error handling
+    /* This is an error handling function. */
     if(!product) {
         return next(new ErrorHandler('Product not found', 404)); // next is a callback function
     }
 
+    /* This is a function that is used to update a product. */
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
         useFindAndModify: false
     });
 
+   /* Sending a response to the client. */
     res.status(200).json({
         success: true,
         product
-    })
+    });
 });
 
 
 
 
 // Delete Product -- Admin
+/* This is a function that is used to delete a product. */
 exports.deleteProduct = async (req, res, next) => {
 
+/* Finding the product by the id. */
     let product = await Product.findById(req.params.id);
 
     // error handling
@@ -113,10 +119,152 @@ exports.deleteProduct = async (req, res, next) => {
         return next(new ErrorHandler('Product not found', 404)); // next is a callback function
     }
 
+/* Deleting the product. */
     await product.remove();
 
+    /* Sending a response to the client. */
     res.status(200).json({
         success: true,
         message: 'Product deleted successfully'
+    });
+};
+
+
+
+
+// Create new review or update the review for a product.
+exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
+
+    /* Destructuring the req.body. */
+    const {rating, comment, productId} = req.body;
+
+    /* Creating a review object. */
+    const review = {
+        user: req.user._id, /* Getting the user id from the user model. */
+        name: req.user.name, /* Getting the name of the user from the user model. */
+        rating: Number(rating), /* Converting the rating to a number. */
+        comment
+    };
+
+    /* Finding the product by the id. */
+    const product = await Product.findById(productId);
+
+    /* Checking if the user has already reviewed the product. */
+    const isReviewed = product.reviews.find(
+        (review) => review.user.toString() === req.user._id.toString() /* `review.user` is a reference to the user id. */
+    );
+
+    /* Updating the review. */
+    if(isReviewed){
+        /* Looping through the reviews array. */
+        product.reviews.forEach(review => {
+
+            if(review.user.toString() === req.user._id.toString()) /* `review.user` is a reference to the user id. */
+
+            /* Updating the review and comment */
+            review.rating = rating,
+            review.comment = comment;
+        });
+    }
+    
+    /* Pushing the review into the product.reviews array. */
+    else{
+        product.reviews.push(review);
+        product.numOfReviews = product.reviews.length;
+    }
+
+
+    let avg = 0;
+
+    /* Looping through the reviews array and adding the rating of each review to
+    the avg variable. */
+    product.reviews.forEach(review => {
+        avg += review.rating
+    });
+
+   /* Calculating the average rating of the product. */
+    product.ratings = avg / product.reviews.length;
+
+
+    /* Used to save the product without validating the product. */
+    await product.save({validateBeforeSave: false});
+
+    res.status(200).json({
+        success: true
     })
-}
+});
+
+
+
+
+
+// Get all reviews of a product
+/* A function that is used to get all the reviews of a product. */
+exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
+    /* Finding the product by the id. */
+    const product = await Product.findById(req.query.id);
+
+   /* An error handling function. */
+    if(!product){
+        return next(new ErrorHandler('Product not found', 404)); // next is a callback function
+    }
+
+    /* Sending a response to the client. */
+    res.status(200).json({
+        success: true,
+        reviews: product.reviews
+    });
+});
+
+
+
+
+// Delete Review
+exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
+     /* Finding the product by the id. */
+     const product = await Product.findById(req.query.productId);
+
+     /* An error handling function. */
+    if(!product){
+        return next(new ErrorHandler('Product not found', 404)); // next is a callback function
+    }
+
+
+    /* Filtering the reviews array and returning the reviews that do not have the
+    same id as the id of the review that is to be deleted. */
+    const reviews = product.reviews.filter(
+        review => review._id.toString() !== req.query.id.toString() /* `review._id` is a reference to the id of the review. */
+    );
+
+    let avg = 0;
+
+    /* Looping through the reviews array and adding the rating of each review to
+    the avg variable. */
+    reviews.forEach(review => {
+        avg += review.rating
+    });
+
+    /* Calculating the average rating of the product. */
+    const ratings = avg / reviews.length;
+
+    /* Used to get the number of reviews of a product. */
+    const numOfReviews = reviews.length;
+
+    /* Updating the product with the new reviews, ratings and numOfReviews. */
+    await Product.findByIdAndUpdate(req.query.productId, {
+        reviews,
+        ratings,
+        numOfReviews
+    },
+    {
+        /* Used to update the product without validating the product. */
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+    /* Sending a response to the client. */
+    res.status(200).json({
+        success: true
+    });
+});

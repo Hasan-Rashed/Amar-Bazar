@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
         maxLength: [8, 'Price should be less than 8 digits']
     },
 
-    rating: {
+    ratings: {
         type: Number,
         default: 0,
     },
@@ -55,6 +55,13 @@ const productSchema = new mongoose.Schema({
 
     reviews: [
         {
+            user: {
+                /* A reference or Id to the user who created the product. */
+                type: mongoose.Schema.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            
             name: {
                 type: String,
                 required: true

@@ -1,9 +1,9 @@
 const express = require('express');
-const { registerUser, loginUser, logout, forgotPassword, resetPassword, getUserDetails } = require('../controllers/userController');
+const { registerUser, loginUser, logout, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getAllUser, getSingleUser, updateUserRole, deleteUser } = require('../controllers/userController');
 
 /* This is destructuring the isAuthenticateUser and authorizeRoles functions from
 the auth.js file. */
-const {isAuthenticateUser, authorizeRoles, isAuthenticatedUser} = require('../middleware/auth');
+const {isAuthenticatedUser, authorizeRoles} = require('../middleware/auth');
 
 
 /* Creating a router object. */
@@ -30,7 +30,28 @@ router.route('/password/reset/:token').put(resetPassword);
 /* Creating a route for the logout function. */
 router.route('/logout').get(logout);
 
+
 /* This is a route for the user to get their own details. */
 router.route('/me').get(isAuthenticatedUser, getUserDetails);
+
+/* This is a route for the user to update their password. */
+router.route('/password/update').put(isAuthenticatedUser, updatePassword);
+
+
+/* This is a route for the user to update their profile. */
+router.route('/me/update').put(isAuthenticatedUser, updateProfile);
+
+/* This is a route for the admin to get all the users. */
+router
+    .route('/admin/users')
+    .get(isAuthenticatedUser, authorizeRoles('admin'), getAllUser);
+
+
+/* This is a route for the admin to get a single user. */
+router
+    .route('/admin/user/:id')
+    .get(isAuthenticatedUser, authorizeRoles('admin'), getSingleUser)
+    .put(isAuthenticatedUser, authorizeRoles('admin'), updateUserRole)
+    .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteUser);
 
 module.exports = router;
