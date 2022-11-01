@@ -4,7 +4,7 @@ import Footer from './component/layout/Footer/Footer.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WebFont from 'webfontloader';
 import React from 'react';
-import Home from './component/layout/Home/Home.js';
+import Home from './component/Home/Home.js';
 
 
 function App() {
