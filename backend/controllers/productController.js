@@ -32,7 +32,9 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
     // module apifeatures is used to filter the products
 
-    const resultPerPage = 5;
+    /* Used to get the number of products that will be displayed on a page. */
+    const resultPerPage = 8;
+    /* Used to get the number of products in the database. */
     const productCount = await Product.countDocuments();
 
 
@@ -43,12 +45,15 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
     .filter() // filter feature function
     .pagination(resultPerPage) // pagination feature function
 
+    /* Getting the products from the database. */
     const products = await apiFeature.query;
     
+    /* Sending a response to the client. */
     res.status(200).json({
         success: true,
-        products
-    })
+        products,
+        productCount
+    });
 });
 
 

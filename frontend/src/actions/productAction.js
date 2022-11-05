@@ -1,0 +1,67 @@
+import axios from 'axios';
+
+import { 
+    ALL_PRODUCT_FAIL,
+    ALL_PRODUCT_REQUEST,
+    ALL_PRODUCT_SUCCESS,
+    CLEAR_ERRORS
+} from '../constants/productConstants.js';
+
+
+
+/**
+ * The function is dispatching an action, getting the data from the server, and
+ * then dispatching an action again
+ */
+
+export const getProduct = () => async (dispatch) => {
+    
+    try {
+        
+        /* Dispatching an action. */
+        dispatch({
+            /* A constant ALL_PRODUCT_REQUEST is being used to dispatch an action. */
+            type: ALL_PRODUCT_REQUEST
+        });
+
+
+        /* Getting the data from the server. */
+        const { data } = await axios.get('/api/v1/products');
+
+        /* Dispatching an action. */
+        dispatch({
+            /* A constant ALL_PRODUCT_SUCCESS is being used to dispatch an action. */
+            type: ALL_PRODUCT_SUCCESS,
+            /* Sending the data to the reducer. */
+            payload: data
+        });
+
+        
+    } catch (error) {
+        /* Dispatching an action. */
+        dispatch({
+            /* A constant ALL_PRODUCT_FAIL is being used to dispatch an action. */
+            type: ALL_PRODUCT_FAIL,
+            /* A function that is being called when the user clicks the submit button. It is
+            taking the data from the form and sending it to the server. */
+            payload: error.response.data.message
+        });
+    }
+};
+
+
+
+/**
+ * The function clearErrors() is an asynchronous function that dispatches an action
+ * with a type of CLEAR_ERRORS
+ */
+
+// Clearing errors
+export const clearErrors = () => async (dispatch) => {
+
+    /* Dispatching an action. */
+    dispatch({ 
+        /* A constant CLEAR_ERRORS is being used to dispatch an action. */
+        type: CLEAR_ERRORS
+    });
+}
