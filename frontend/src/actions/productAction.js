@@ -4,6 +4,9 @@ import {
     ALL_PRODUCT_FAIL,
     ALL_PRODUCT_REQUEST,
     ALL_PRODUCT_SUCCESS,
+    PRODUCT_DETAILS_REQUEST,
+    PRODUCT_DETAILS_FAIL,
+    PRODUCT_DETAILS_SUCCESS,
     CLEAR_ERRORS
 } from '../constants/productConstants.js';
 
@@ -42,6 +45,44 @@ export const getProduct = () => async (dispatch) => {
         dispatch({
             /* A constant ALL_PRODUCT_FAIL is being used to dispatch an action. */
             type: ALL_PRODUCT_FAIL,
+            /* A function that is being called when the user clicks the submit button. It is
+            taking the data from the form and sending it to the server. */
+            payload: error.response.data.message
+        });
+    }
+};
+
+
+
+
+export const getProductDetails = (id) => async (dispatch) => {
+    
+    try {
+        
+        /* Dispatching an action. */
+        dispatch({
+            /* A constant PRODUCT_DETAILS_REQUEST is being used to dispatch an action. */
+            type: PRODUCT_DETAILS_REQUEST
+        });
+
+
+        /* Getting the data from the server. */
+        const { data } = await axios.get(`/api/v1/product/${id}`);
+
+        /* Dispatching an action. */
+        dispatch({
+            /* A constant PRODUCT_DETAILS_SUCCESS is being used to dispatch an action. */
+            type: PRODUCT_DETAILS_SUCCESS,
+            /* Sending the data to the reducer. */
+            payload: data.product
+        });
+
+        
+    } catch (error) {
+        /* Dispatching an action. */
+        dispatch({
+            /* A constant PRODUCT_DETAILS_FAIL is being used to dispatch an action. */
+            type: PRODUCT_DETAILS_FAIL,
             /* A function that is being called when the user clicks the submit button. It is
             taking the data from the form and sending it to the server. */
             payload: error.response.data.message

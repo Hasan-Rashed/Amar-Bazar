@@ -6,14 +6,17 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productReducer } from './reducers/productReducer';
+import { productReducer, productDetailsReducer } from './reducers/productReducer';
 
 
 
 /* Creating a reducer that will be used to create the store. */
 const reducer = combineReducers({
     /* Creating a key called products and assigning it to the productReducer. */
-    products: productReducer
+    products: productReducer,
+    /* Creating a key called productDetails and assigning it to the
+    productDetailsReducer. */
+    productDetails: productDetailsReducer
 });
 
 

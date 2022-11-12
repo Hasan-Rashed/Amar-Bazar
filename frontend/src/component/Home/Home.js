@@ -1,68 +1,82 @@
 import React, { Fragment, useEffect } from 'react';
+import { useAlert } from 'react-alert';
 import { CgMouse } from 'react-icons/cg';
-import './Home.css';
-import Product from './Product';
+import Loader from '../layout/Loader/Loader';
 import MetaData from '../layout/MetaData';
+import './Home.css';
+import Product from './ProductCard';
 
 /* Importing the getProduct function from the productAction.js file. */
-import { getProduct } from '../../actions/productAction';
+import { clearErrors, getProduct } from '../../actions/productAction';
 
 /* to working with redux Importing the useSelector and useDispatch hooks from the react-redux library. */
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'; // to access backend data from redux store using useSelector
 
 
-
-const product = {
-    name: 'Blue T-shirt',
-    images: [{url: 'https://i.ibb.co/DRST11n/1.webp'}],
-    price: '$24',
-    _id: 'tShirtId',
-}
 
 
 const Home = () => {
-    
-/* Importing the useDispatch hook from the react-redux library. */
+    const alert = useAlert();
+
+    /* Importing the useDispatch hook from the react-redux library. */
     const dispatch = useDispatch();
+
+
+    /* Destructuring the state.products object for showing in the frontend */
+    const { loading, error, products, productsCount } = useSelector(state => state.products);
 
     /* A hook that is used to fetch data from the backend. */
     useEffect(() => {
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors());
+        }
+
         /* Calling the getProduct function from the productAction.js file. */
         dispatch(getProduct());
-    }, [dispatch]);
-    
-  return (
-    <Fragment>
+    }, [dispatch, error, alert]);
 
-        {/* A component that is used to set the title of the page. */}
-        <MetaData title='AMAR BAZAR' />
-        
-        <div className="banner">
-            <h2>Welcome to Amar Bazar</h2>
-            <h1>FIND AMAZING PRODUCTS BELOW</h1>
+    return (
+        <Fragment>
+            {
+                loading ? (<Loader />)
+                    : (
+                        <Fragment>
 
-            <a href="#container">
-                <button>
-                    Scroll <CgMouse />
-                </button>
-            </a>    
-        </div>
+                            {/* A component that is used to set the title of the page. */}
+                            <MetaData title='AMAR BAZAR' />
 
-        <h2 className='homeHeading'>Featured Products</h2>
+                            <div className="banner">
+                                <h2>Welcome to Amar Bazar</h2>
+                                <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
-        <div className="container" id="container">
-            <Product product={product} />
-            <Product product={product} />
-            <Product product={product} />
-            <Product product={product} />
+                                <a href="#container">
+                                    <button>
+                                        Scroll <CgMouse />
+                                    </button>
+                                </a>
+                            </div>
 
-            <Product product={product} />
-            <Product product={product} />
-            <Product product={product} />
-            <Product product={product} />
-        </div>
-    </Fragment>
-  )
+                            <h2 className='homeHeading'>Featured Products</h2>
+
+                            <div className="container" id="container">
+
+                                {/* using parenthesis instead of curly braces is mandatory */}
+                                {/* Checking if the products array is not empty then it will map through
+            the products array and pass each product object to the Product
+            component. */}
+                                {products && products.map((product, index) => (
+                                    /* Passing the product object to the Product component. */
+                                    <Product key={index} product={product} />
+                                ))}
+
+                            </div>
+                        </Fragment>
+                    )
+            }
+        </Fragment>
+    )
 }
 
 export default Home

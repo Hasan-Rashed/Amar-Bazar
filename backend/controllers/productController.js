@@ -29,13 +29,13 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 // GET All Products
 /* catchAsyncErrors A middleware function that is used to handle errors of async functions. */
 
-exports.getAllProducts = catchAsyncErrors(async (req, res) => {
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
     // module apifeatures is used to filter the products
 
     /* Used to get the number of products that will be displayed on a page. */
     const resultPerPage = 8;
     /* Used to get the number of products in the database. */
-    const productCount = await Product.countDocuments();
+    const productsCount = await Product.countDocuments();
 
 
     
@@ -52,7 +52,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
     res.status(200).json({
         success: true,
         products,
-        productCount
+        productsCount
     });
 });
 
@@ -74,7 +74,6 @@ exports.getProductDetails = catchAsyncErrors(catchAsyncErrors(async (req, res, n
     res.status(200).json({
         success: true,
         product,
-        ProductCount
     })
 }));
 
