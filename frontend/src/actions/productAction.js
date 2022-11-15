@@ -17,7 +17,7 @@ import {
  * then dispatching an action again
  */
 
-export const getProduct = () => async (dispatch) => {
+export const getProduct = (keyword="") => async (dispatch) => {
     
     try {
         
@@ -27,9 +27,10 @@ export const getProduct = () => async (dispatch) => {
             type: ALL_PRODUCT_REQUEST
         });
 
+        let link = `/api/v1/products?keyword=${keyword}`;
 
         /* Getting the data from the server. */
-        const { data } = await axios.get('/api/v1/products');
+        const { data } = await axios.get(link);
 
         /* Dispatching an action. */
         dispatch({
