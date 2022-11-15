@@ -17,7 +17,7 @@ import {
  * then dispatching an action again
  */
 
-export const getProduct = (keyword="") => async (dispatch) => {
+export const getProduct = (keyword="", currentPage = 1) => async (dispatch) => {
     
     try {
         
@@ -27,7 +27,8 @@ export const getProduct = (keyword="") => async (dispatch) => {
             type: ALL_PRODUCT_REQUEST
         });
 
-        let link = `/api/v1/products?keyword=${keyword}`;
+        /* Creating a link that is being used to get the data from the server. */
+        let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}`;
 
         /* Getting the data from the server. */
         const { data } = await axios.get(link);
