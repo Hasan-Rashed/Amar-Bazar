@@ -41,7 +41,8 @@ export const productReducer = (state = { products: [] }, action) => { /* Setting
                 loading: false, /* Setting the loading state to false. */
                 products: action.payload.products, /* Setting the product state to the products array. */
                 productsCount: action.payload.productsCount,
-                resultPerPage: action.payload.resultPerPage
+                resultPerPage: action.payload.resultPerPage,
+                filteredProductsCount: action.payload.filteredProductsCount
             };
 
         /* Setting the loading state to false and setting the error state to the

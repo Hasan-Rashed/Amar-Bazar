@@ -36,6 +36,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
     const resultPerPage = 8;
     /* Used to get the number of products in the database. */
     const productsCount = await Product.countDocuments();
+    console.log('Total products: ', productsCount);
 
 
     
@@ -43,17 +44,26 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
     const apiFeature = new ApiFeatures(Product.find(), req.query) // query and queryStr parameter
     .search() // search feature function
     .filter() // filter feature function
-    .pagination(resultPerPage) // pagination feature function
 
+/* Getting the products from the database. */
+    let products = await apiFeature.query;
+
+/* Used to get the number of products that are filtered. */
+    let filteredProductsCount = products.length;
+
+/* Used to paginate the products. */
+    apiFeature.pagination(resultPerPage) // pagination feature function
+    
     /* Getting the products from the database. */
-    const products = await apiFeature.query;
+    products = await apiFeature.query;
     
     /* Sending a response to the client. */
     res.status(200).json({
         success: true,
         products,
         productsCount,
-        resultPerPage
+        resultPerPage,
+        filteredProductsCount
     });
 });
 

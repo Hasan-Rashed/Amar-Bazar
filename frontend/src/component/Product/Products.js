@@ -22,8 +22,8 @@ const Products = () => {
     
 
 /* Destructuring the state.products object. */
-    const { products, loading, error, productsCount, resultPerPage} = useSelector(state => state.products);
-
+    const { products, loading, error, productsCount, resultPerPage, filteredProductsCount} = useSelector(state => state.products);
+// console.log('productsCount is: ', productsCount);
     /* Destructuring the keyword from the useParams hook. */
     const {keyword} = useParams();
 
@@ -44,6 +44,10 @@ const Products = () => {
 /* Dispatching an action to the reducer. */
         dispatch(getProduct(keyword, currentPage, price));
     }, [dispatch, keyword, currentPage, price]);
+
+
+/* Setting the count variable to the filteredProductsCount. */
+    let count = filteredProductsCount;
     
     
   return (
@@ -78,7 +82,7 @@ const Products = () => {
                 </div>
                 
 
-                {
+                { resultPerPage < count &&
                     (
                         <div className="paginationBox">
                     <Pagination 

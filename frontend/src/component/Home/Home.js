@@ -23,7 +23,7 @@ const Home = () => {
 
 
     /* Destructuring the state.products object for showing in the frontend */
-    const { loading, error, products, productsCount } = useSelector(state => state.products);
+    const { loading, error, products } = useSelector((state) => state.products);
 
     /* A hook that is used to fetch data from the backend. */
     useEffect(() => {
