@@ -7,6 +7,8 @@ import ProductCard from '../Home/ProductCard';
 import { useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import { useState } from 'react';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 
 
 const Products = () => {
@@ -14,7 +16,10 @@ const Products = () => {
     const dispatch = useDispatch();
 
 
-    const [currentPage, setCurrentPage] = useState(1);
+       /* A hook that allows us to use state in a functional component. */
+        const [currentPage, setCurrentPage] = useState(1);
+        const [price, setPrice] = useState([0, 25000]);
+    
 
 /* Destructuring the state.products object. */
     const { products, loading, error, productsCount, resultPerPage} = useSelector(state => state.products);
@@ -25,11 +30,20 @@ const Products = () => {
     const setCurrentPageNo = (e) => {
         setCurrentPage(e);
     }
+
+    /**
+     * It takes an event and a new price, and then sets the price to the new price
+     * @param event - The event that triggered the function.
+     * @param newPrice - The new price that the user has entered.
+     */
+    const priceHandler = (event, newPrice) => {
+        setPrice(newPrice);
+    }
     
     useEffect(() => {
 /* Dispatching an action to the reducer. */
-        dispatch(getProduct(keyword, currentPage));
-    }, [dispatch, keyword, currentPage]);
+        dispatch(getProduct(keyword, currentPage, price));
+    }, [dispatch, keyword, currentPage, price]);
     
     
   return (
@@ -47,6 +61,22 @@ const Products = () => {
                         ))
                     }
                 </div>
+
+                
+                <div className="filterBox">
+                   {/* A slider that allows the user to filter the products by
+                   price. */}
+                    <Typography>Price</Typography>
+                    <Slider  
+                        value={price}
+                        onChange={priceHandler}
+                        valueLabelDisplay='auto'
+                        aria-labelledby='range-slider'
+                        min={0}
+                        max={25000}
+                    />
+                </div>
+                
 
                 {
                     (
