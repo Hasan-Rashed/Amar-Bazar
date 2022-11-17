@@ -8,6 +8,7 @@ import ReactStars from 'react-rating-stars-component';
 import ReviewCard from './ReviewCard';
 import Loader from '../layout/Loader/Loader';
 import {useAlert} from 'react-alert';
+import MetaData from '../layout/MetaData';
 
 const ProductDetails = ({ match }) => {
     /* Destructuring the id from the useParams hook. */
@@ -47,8 +48,12 @@ const ProductDetails = ({ match }) => {
     
   return (
     <>
-        { loading ? <Loader /> : (
+        { /* Checking if the loading is true, if it is, it will render the loader
+        component. */
+        loading ? <Loader /> : (
             <>
+            <MetaData title = {`${product.name} -- AMAR-BAZAR`} />
+
         <div className="ProductDetails">
             <div>
                 <Carousel>
