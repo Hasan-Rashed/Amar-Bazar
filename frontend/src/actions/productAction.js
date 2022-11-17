@@ -17,7 +17,7 @@ import {
  * then dispatching an action again
  */
 
-export const getProduct = (keyword="", currentPage = 1, price = [0, 25000]) => async (dispatch) => {
+export const getProduct = (keyword="", currentPage = 1, price = [0, 25000], category) => async (dispatch) => {
     
     try {
         
@@ -29,6 +29,10 @@ export const getProduct = (keyword="", currentPage = 1, price = [0, 25000]) => a
 
         /* Creating a link that is being used to get the data from the server. */
         let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+
+        if(category){
+            link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}`;
+        }
 
         /* Getting the data from the server. */
         const { data } = await axios.get(link);

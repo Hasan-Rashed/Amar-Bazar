@@ -11,6 +11,19 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 
 
+
+/* An array of categories. */
+const categories = [
+    'Laptop',
+    'Footwear',
+    'Bottom',
+    'Tops',
+    'Attire',
+    'Camera',
+    'Smartphones'
+];
+
+
 const Products = () => {
 /* Importing the useDispatch hook from the react-redux library. */
     const dispatch = useDispatch();
@@ -19,6 +32,7 @@ const Products = () => {
        /* A hook that allows us to use state in a functional component. */
         const [currentPage, setCurrentPage] = useState(1);
         const [price, setPrice] = useState([0, 25000]);
+        const [category, setCategory] = useState('');
     
 
 /* Destructuring the state.products object. */
@@ -42,8 +56,8 @@ const Products = () => {
     
     useEffect(() => {
 /* Dispatching an action to the reducer. */
-        dispatch(getProduct(keyword, currentPage, price));
-    }, [dispatch, keyword, currentPage, price]);
+        dispatch(getProduct(keyword, currentPage, price, category));
+    }, [dispatch, keyword, currentPage, price, category]);
 
 
 /* Setting the count variable to the filteredProductsCount. */
@@ -79,6 +93,21 @@ const Products = () => {
                         min={0}
                         max={25000}
                     />
+
+                    <Typography>Categories</Typography>
+                    <ul className="categoryBox">
+                        {
+                            categories.map((category) => (
+                                <li
+                                    className = 'category-link'
+                                    key = {category}
+                                    onClick = {() => setCategory(category)}
+                                >
+                                    {category}
+                                </li>
+                            ))
+                        }
+                    </ul>
                 </div>
                 
 
