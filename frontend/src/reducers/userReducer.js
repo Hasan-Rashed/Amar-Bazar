@@ -5,6 +5,11 @@ import {
     REGISTER_USER_REQUEST,  
     REGISTER_USER_SUCCESS,  
     REGISTER_USER_FAIL, 
+    LOAD_USER_REQUEST,
+    LOAD_USER_SUCCESS,
+    LOAD_USER_FAIL,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAIL,
     CLEAR_ERRORS
 } from '../constants/userConstants';
 
@@ -16,6 +21,7 @@ export const userReducer = (state = { user:{} }, action) => { /* Setting the def
         property set to true and the isAuthenticated property set to false. */
         case LOGIN_REQUEST:
             case REGISTER_USER_REQUEST:
+                case LOAD_USER_REQUEST:
             return {
                 loading: true,
                 isAuthenticated: false
@@ -26,12 +32,20 @@ export const userReducer = (state = { user:{} }, action) => { /* Setting the def
         user object that was passed in the action payload. */
         case LOGIN_SUCCESS:
             case REGISTER_USER_SUCCESS:
+                case LOAD_USER_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 isAuthenticated: true,
                 user: action.payload
             };
+
+        case LOGOUT_SUCCESS:
+            return {
+                loading: false,
+                user: null,
+                isAuthenticated: false
+            }
 
         case LOGIN_FAIL:
             case REGISTER_USER_FAIL:
@@ -42,6 +56,21 @@ export const userReducer = (state = { user:{} }, action) => { /* Setting the def
                 user: null,
                 error: action.payload
             };
+
+            case LOAD_USER_FAIL: 
+                return {
+                    loading: false,
+                    isAuthenticated: false,
+                    user: null,
+                    error: action.payload
+                }
+
+            case LOGOUT_FAIL:
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.payload
+                }
 
             /* Clearing the error state. */
             case CLEAR_ERRORS:
