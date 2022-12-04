@@ -1,0 +1,208 @@
+[{
+  "_id": {
+    "$oid": "62ffa9b77837e9b300d82de4"
+  },
+  "name": "Product2",
+  "description": "This is a Samsung product",
+  "price": 3000,
+  "rating": 0,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "62ffa9b77837e9b300d82de5"
+      }
+    }
+  ],
+  "category": "Laptop",
+  "stock": 1,
+  "numOfReviews": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660922295145"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62ffa9bc7837e9b300d82de7"
+  },
+  "name": "Product3",
+  "description": "This is a Samsung product",
+  "price": 3000,
+  "rating": 0,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "62ffa9bc7837e9b300d82de8"
+      }
+    }
+  ],
+  "category": "Laptop",
+  "stock": 1,
+  "numOfReviews": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660922300502"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62ffa9c07837e9b300d82dea"
+  },
+  "name": "Product4",
+  "description": "This is a Samsung product",
+  "price": 3000,
+  "rating": 0,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "62ffa9c07837e9b300d82deb"
+      }
+    }
+  ],
+  "category": "Laptop",
+  "stock": 1,
+  "numOfReviews": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660922304145"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62ffa9c37837e9b300d82ded"
+  },
+  "name": "Product5",
+  "description": "This is a Samsung product",
+  "price": 3000,
+  "rating": 0,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "62ffa9c37837e9b300d82dee"
+      }
+    }
+  ],
+  "category": "Laptop",
+  "stock": 1,
+  "numOfReviews": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660922307634"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62ffa9c67837e9b300d82df0"
+  },
+  "name": "Product6",
+  "description": "This is a Samsung product",
+  "price": 3000,
+  "rating": 0,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "62ffa9c67837e9b300d82df1"
+      }
+    }
+  ],
+  "category": "Laptop",
+  "stock": 1,
+  "numOfReviews": 0,
+  "reviews": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660922310362"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6309706f58e830b04cb757c7"
+  },
+  "name": "sample",
+  "description": "This is a sample product",
+  "price": 51200,
+  "rating": 0,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "6309706f58e830b04cb757c8"
+      }
+    }
+  ],
+  "category": "machine",
+  "stock": 1,
+  "numOfReviews": 0,
+  "user": {
+    "$oid": "63058c646b126fe325cf5af3"
+  },
+  "reviews": [],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1661562992002"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "635b576cc6ca8fc348a979b2"
+  },
+  "name": "A4Tech",
+  "description": "This is a keyboard",
+  "price": 650,
+  "ratings": 5,
+  "images": [
+    {
+      "public_id": "sample image",
+      "url": "https://i.ibb.co/DRST11n/1.webp",
+      "_id": {
+        "$oid": "635b576cc6ca8fc348a979b3"
+      }
+    }
+  ],
+  "category": "keyboard",
+  "stock": 1,
+  "numOfReviews": 1,
+  "user": {
+    "$oid": "63058c646b126fe325cf5af3"
+  },
+  "reviews": [
+    {
+      "user": {
+        "$oid": "635b5b080921078aa50e18cf"
+      },
+      "name": "Hasan Temp",
+      "rating": 5,
+      "comment": "just okay product",
+      "_id": {
+        "$oid": "635b5b4e0921078aa50e18d3"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1666930540332"
+    }
+  },
+  "__v": 2
+}]

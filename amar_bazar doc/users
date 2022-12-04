@@ -1,0 +1,79 @@
+[{
+  "_id": {
+    "$oid": "63058c646b126fe325cf5af3"
+  },
+  "name": "Hasan Rashed",
+  "email": "hasanrashed537@gmail.com",
+  "password": "$2a$10$i8tpfsmA7ksJKf2H8BWsuOVFHl4.R0VmHy2HivvsMGkFOmGfU0.qm",
+  "avatar": {
+    "public_id": "This is a sample id",
+    "url": "profilePicUrl"
+  },
+  "role": "admin",
+  "__v": 0,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1666401551408"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "63520b5071a07ba1bea8617c"
+  },
+  "name": "Amar Bazar",
+  "email": "amarbazar168@gmail.com",
+  "password": "$2a$10$/AQ87mJC16xobvaguWgSxOvBCUZJkUTX2Nd7tKZHVqX.kOnUitGwO",
+  "avatar": {
+    "public_id": "This is a sample id",
+    "url": "profilePicUrl"
+  },
+  "role": "user",
+  "__v": 0,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1666401551408"
+    }
+  },
+  "resetPasswordExpire": {
+    "$date": {
+      "$numberLong": "1666414070055"
+    }
+  },
+  "resetPasswordToken": "179c7cd39ca5bd429874c492c9fb59dfcb8b002c6b9ed493ed5b3d9d28c75375"
+},{
+  "_id": {
+    "$oid": "6377b9ea29c82aa81f4827a1"
+  },
+  "role": "user",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1668790471956"
+    }
+  },
+  "name": "This is a test name",
+  "email": "testing@gmail.com",
+  "password": "$2a$10$DCENerAxm6FPgIfr6yF1buhbkgCLOFkLyhDQCcOx6cBn.RM1/0Gl.",
+  "avatar": {
+    "public_id": "avatars/hemtlnqnppmaywoh7ovo",
+    "url": "https://res.cloudinary.com/df6tunnjb/image/upload/v1668790761/avatars/hemtlnqnppmaywoh7ovo.png"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63817ceb6548d9c79ec672c9"
+  },
+  "role": "user",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669430120843"
+    }
+  },
+  "name": "Kamrul Hasan",
+  "email": "rashedmazumder30@gmail.com",
+  "password": "$2a$10$rimEw0PkuYeseHWA790IyOYIE9p4dV216lAW9lqACpbwNs5vnn5EO",
+  "avatar": {
+    "public_id": "avatars/qll8bmooqclmkea9gabu",
+    "url": "https://res.cloudinary.com/df6tunnjb/image/upload/v1669430507/avatars/qll8bmooqclmkea9gabu.png"
+  },
+  "__v": 0
+}]
