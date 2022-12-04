@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { productReducer, productDetailsReducer } from './reducers/productReducer';
-import { userReducer } from './reducers/userReducer';
+import { profileReducer, userReducer } from './reducers/userReducer';
 
 
 
@@ -19,7 +19,8 @@ const reducer = combineReducers({
     productDetailsReducer. */
     productDetails: productDetailsReducer,
 /* Creating a key called user and assigning it to the userReducer. */
-    user: userReducer
+    user: userReducer,
+    profile: profileReducer
 });
 
 

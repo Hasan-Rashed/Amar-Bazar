@@ -277,7 +277,28 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         email: req.body.email,
     }
 
-    // we will add cloudinary later
+
+    if(req.body.avatar !== ""){
+        const user = await User.findById(req.user.id);
+
+        const imageId = user.avatar.public_id;
+
+        /* Deleting the image from the cloudinary. */
+        await cloudinary.v2.uploader.destroy(imageId);
+
+        /* This is uploading the image to the cloudinary. */
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: "scale"
+        });
+
+        newUserData.avatar = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
+        }
+    }
+    
 
     /* This is updating the user with the id that is stored in the token with the
     new user data. */

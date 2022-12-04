@@ -10,6 +10,10 @@ import {
     LOAD_USER_FAIL,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    UPDATE_PROFILE_RESET,
     CLEAR_ERRORS
 } from '../constants/userConstants';
 
@@ -70,6 +74,58 @@ export const userReducer = (state = { user:{} }, action) => { /* Setting the def
                     ...state,
                     loading: false,
                     error: action.payload
+                }
+
+            /* Clearing the error state. */
+            case CLEAR_ERRORS:
+                /* Returning an object with two properties. */
+                return {
+                    ...state, /* A spread operator. It is used to spread the properties of an object. */
+                    error: null /* Setting the error state to null. */
+                };
+
+            /* Returning the default state. */
+            default:
+                return state;
+    }
+};
+
+
+
+
+export const profileReducer = (state = {  }, action) => { /* Setting the default state to an object with a property called products and setting the value of the property to an empty array. */
+    switch(action.type){
+        /* A reducer that is listening for the LOGIN_REQUEST action. When it
+        receives the action, it will return a new state object with the loading
+        property set to true and the isAuthenticated property set to false. */
+        case UPDATE_PROFILE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        /* Returning a new state object with the loading property set to false, the
+        isAuthenticated property set to true, and the user property set to the
+        user object that was passed in the action payload. */
+        case UPDATE_PROFILE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isUpdated: action.payload
+            };
+
+        case UPDATE_PROFILE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+
+
+            case UPDATE_PROFILE_RESET:
+                return {
+                    ...state,
+                    isUpdated: false
                 }
 
             /* Clearing the error state. */
