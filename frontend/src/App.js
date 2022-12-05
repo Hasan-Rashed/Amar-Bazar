@@ -16,6 +16,7 @@ import UserOptions from './component/layout/Header/UserOptions'
 import Profile from "./component/User/Profile";
 import ProtectedRoute from './component/Route/ProtectedRoute';
 import UpdateProfile from './component/User/UpdateProfile';
+import UpdatePassword from './component/User/UpdatePassword';
 
 
 function App() {
@@ -61,6 +62,15 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <UpdateProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/password/update"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <UpdatePassword />
             </ProtectedRoute>
           }
         />

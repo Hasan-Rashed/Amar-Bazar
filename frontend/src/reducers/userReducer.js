@@ -14,6 +14,10 @@ import {
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_FAIL,
     UPDATE_PROFILE_RESET,
+    UPDATE_PASSWORD_REQUEST,
+    UPDATE_PASSWORD_SUCCESS,
+    UPDATE_PASSWORD_RESET,
+    UPDATE_PASSWORD_FAIL,
     CLEAR_ERRORS
 } from '../constants/userConstants';
 
@@ -99,6 +103,7 @@ export const profileReducer = (state = {  }, action) => { /* Setting the default
         receives the action, it will return a new state object with the loading
         property set to true and the isAuthenticated property set to false. */
         case UPDATE_PROFILE_REQUEST:
+            case UPDATE_PASSWORD_REQUEST:
             return {
                 ...state,
                 loading: true,
@@ -108,6 +113,7 @@ export const profileReducer = (state = {  }, action) => { /* Setting the default
         isAuthenticated property set to true, and the user property set to the
         user object that was passed in the action payload. */
         case UPDATE_PROFILE_SUCCESS:
+            case UPDATE_PASSWORD_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -115,6 +121,7 @@ export const profileReducer = (state = {  }, action) => { /* Setting the default
             };
 
         case UPDATE_PROFILE_FAIL:
+            case UPDATE_PASSWORD_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -123,6 +130,7 @@ export const profileReducer = (state = {  }, action) => { /* Setting the default
 
 
             case UPDATE_PROFILE_RESET:
+                case UPDATE_PASSWORD_RESET:
                 return {
                     ...state,
                     isUpdated: false
