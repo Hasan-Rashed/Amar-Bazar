@@ -18,6 +18,12 @@ import {
     UPDATE_PASSWORD_SUCCESS,
     UPDATE_PASSWORD_RESET,
     UPDATE_PASSWORD_FAIL,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL,
     CLEAR_ERRORS
 } from '../constants/userConstants';
 
@@ -135,6 +141,61 @@ export const profileReducer = (state = {  }, action) => { /* Setting the default
                     ...state,
                     isUpdated: false
                 }
+
+            /* Clearing the error state. */
+            case CLEAR_ERRORS:
+                /* Returning an object with two properties. */
+                return {
+                    ...state, /* A spread operator. It is used to spread the properties of an object. */
+                    error: null /* Setting the error state to null. */
+                };
+
+            /* Returning the default state. */
+            default:
+                return state;
+    }
+};
+
+
+
+
+export const forgotPasswordReducer = (state = {}, action) => { /* Setting the default state to an object with a property called products and setting the value of the property to an empty array. */
+    switch(action.type){
+        /* A reducer that is listening for the LOGIN_REQUEST action. When it
+        receives the action, it will return a new state object with the loading
+        property set to true and the isAuthenticated property set to false. */
+            case FORGOT_PASSWORD_REQUEST:
+                case RESET_PASSWORD_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
+
+        /* Returning a new state object with the loading property set to false, the
+        isAuthenticated property set to true, and the user property set to the
+        user object that was passed in the action payload. */
+            case FORGOT_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload
+            };
+
+            case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: action.payload
+            };
+
+            case FORGOT_PASSWORD_FAIL:
+                case RESET_PASSWORD_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
 
             /* Clearing the error state. */
             case CLEAR_ERRORS:

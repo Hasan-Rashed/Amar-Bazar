@@ -1,33 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import Loader from '../layout/Loader/Loader';
-import './UpdatePassword.css';
+import './ResetPassword.css';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, updatePassword } from '../../actions/userAction';
+import { clearErrors, resetPassword } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { useNavigate } from 'react-router-dom';
-import { UPDATE_PASSWORD_RESET } from '../../constants/userConstants';
 import MetaData from '../layout/MetaData';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { useParams } from 'react-router-dom';
 
-const UpdatePassword = ({ history }) => {
+
+
+
+const ResetPassword = ({ history, match }) => {
+/* Creating a reference to the dispatch function. */
     const dispatch = useDispatch();
 
     /* Creating a reference to the alert function. */
         const alert = useAlert();
     
+/* Creating a reference to the useNavigate() hook. */
     let navigate = useNavigate();
 
-    const { error, isUpdated, loading } = useSelector((state) => state.profile);
+/* Destructuring the token property from the useParams() hook. */
+    const { token } = useParams();
 
-    const [oldPassword, setOldPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
+/* Destructuring the error, success, and loading properties from the
+state.forgotPassword object. */
+    const { error, success, loading } = useSelector((state) => state.forgotPassword);
+
+    const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     
 
-    const updatePasswordSubmit = (e) => {
+    const resetPasswordSubmit = (e) => {
         /* The above code is preventing the default action of the event from
         occurring. */
               e.preventDefault();
@@ -38,11 +46,10 @@ const UpdatePassword = ({ history }) => {
              /* The above code is setting the name, email, password, and avatar properties
              of the myForm object to the values of the name, email, password, and avatar
              state objects. */
-              myForm.set("oldPassword", oldPassword);
-              myForm.set("newPassword", newPassword);
+              myForm.set("password", password);
               myForm.set("confirmPassword", confirmPassword);
         
-              dispatch(updatePassword(myForm));
+              dispatch(resetPassword(token, myForm));
             }
         
         
@@ -56,16 +63,12 @@ const UpdatePassword = ({ history }) => {
                     dispatch(clearErrors())
                 }
         
-                if(isUpdated){
-                    alert.success('Profile Updated Successfully.');
+                if(success){
+                    alert.success('Password Updated Successfully.');
 
-                    navigate('/account');
-
-                    dispatch({
-                        type: UPDATE_PASSWORD_RESET
-                    })
+                    navigate('/login');
                 }
-            }, [dispatch, error, alert, history, navigate, isUpdated]);
+            }, [dispatch, error, alert, history, navigate, success]);
     
     
     
@@ -76,33 +79,22 @@ const UpdatePassword = ({ history }) => {
             <>
         <MetaData title="Change Password" />
         
-        <div className="updatePasswordContainer">
-            <div className="updatePasswordBox">
-            <h2 className="updatePasswordHeading">Update Profile</h2>
+        <div className="resetPasswordContainer">
+            <div className="resetPasswordBox">
+            <h2 className="resetPasswordHeading">Update Profile</h2>
             <form 
-                    className='updatePasswordForm'
-                    onSubmit={updatePasswordSubmit}
+                    className='resetPasswordForm'
+                    onSubmit={resetPasswordSubmit}
                 >
 
-                <div className="loginPassword">
-                    <VpnKeyIcon />
-                    <input 
-                        type="password" 
-                        placeholder="Old Password"
-                        required
-                        value={oldPassword}
-                        onChange={(e) => setOldPassword(e.target.value)}
-                    />
-                </div>
-
-                <div className="loginPassword">
+                <div>
                     <LockOpenIcon />
                     <input 
                         type="password" 
                         placeholder="New Password"
                         required
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
 
@@ -119,8 +111,8 @@ const UpdatePassword = ({ history }) => {
 
                 <input 
                     type="submit"
-                    value="Change"
-                    className="updatePasswordBtn"
+                    value="Update"
+                    className="resetPasswordBtn"
                 />
 
                 </form>
@@ -132,4 +124,4 @@ const UpdatePassword = ({ history }) => {
   )
 }
 
-export default UpdatePassword
+export default ResetPassword
