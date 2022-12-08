@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { productReducer, productDetailsReducer } from './reducers/productReducer';
 import { profileReducer, userReducer, forgotPasswordReducer } from './reducers/userReducer';
+import { cartReducer } from './reducers/cartReducer';
 
 
 
@@ -21,11 +22,19 @@ const reducer = combineReducers({
 /* Creating a key called user and assigning it to the userReducer. */
     user: userReducer,
     profile: profileReducer,
-    forgotPassword: forgotPasswordReducer 
+    forgotPassword: forgotPasswordReducer,
+    cart: cartReducer
 });
 
 
-let initialState = {};
+/* Setting the initial state of the cart to the cartItems in localStorage. */
+let initialState = {
+    cart: {
+        cartItems: localStorage.getItem('cartItems') 
+            ? JSON.parse(localStorage.getItem('cartItems'))
+            : [] 
+    }
+};
 
 /* The above code is creating a middleware array that contains the thunk
 middleware. */
