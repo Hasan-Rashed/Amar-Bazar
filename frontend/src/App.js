@@ -19,6 +19,8 @@ import UpdateProfile from './component/User/UpdateProfile';
 import UpdatePassword from './component/User/UpdatePassword';
 import ForgotPassword from './component/User/ForgotPassword';
 import ResetPassword from './component/User/ResetPassword';
+import Cart from './component/Cart/Cart.js';
+
 
 
 function App() {
@@ -83,6 +85,8 @@ function App() {
           
 
         <Route exact path="/login" element={ <LoginSignUp /> } />
+
+        <Route exact path="/cart" element={ <Cart /> } />
       </Routes>
       <Footer />
     </Router>
