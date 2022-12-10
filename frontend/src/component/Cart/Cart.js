@@ -6,15 +6,24 @@ import { addItemsToCart, removeItemsFromCart } from '../../actions/cartAction';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
-const Cart = () => {
+
+const Cart = ({ history }) => {
+    /* A hook that allows us to dispatch an action to the reducer. */
     const dispatch = useDispatch();
+    /* A hook that allows us to navigate to a different route. */
+    const navigate = useNavigate();
 
 /* Destructuring the cartItems from the state.cart. */
     const { cartItems } = useSelector((state) => state.cart);
+
+/* Destructuring the isAuthenticated from the state.user. */
+    const { isAuthenticated } = useSelector(state => state.user);
+
     
 
   /**
@@ -60,6 +69,16 @@ const Cart = () => {
     const deleteCartItems = (id) => {
         dispatch(removeItemsFromCart(id));
     };
+
+
+    const checkoutHandler = () => {
+    //   navigate('/login?redirect=shipping');
+        if(isAuthenticated){
+            navigate('/shipping');
+        }else{
+            navigate('/login?redirect=shipping');
+        }
+    }
     
     
   return (
@@ -107,7 +126,7 @@ const Cart = () => {
 
                     <div></div>
                     <div className="checkOutBtn">
-                        <button>Check Out</button>
+                        <button onClick={checkoutHandler} >Check Out</button>
                     </div>
                 </div>
             </div>

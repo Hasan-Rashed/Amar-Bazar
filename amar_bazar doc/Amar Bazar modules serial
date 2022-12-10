@@ -3,7 +3,7 @@ errors:
 2:37:15 -> deocdedData error(invalid signature)
 3:22:56 -> mongoose duplicate key error (couldnot write)
 
-time: 10:35:40
+time: 10:37:30
 
 backend: 
 	1) app.js

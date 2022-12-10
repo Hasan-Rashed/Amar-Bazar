@@ -10,9 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, login, register } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
 import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 
-const LoginSignUp = ({ history }) => {
+const LoginSignUp = ({ history, location }) => {
 
 /* The above code is creating a reference to the dispatch function. */
     const dispatch = useDispatch();
@@ -20,8 +21,16 @@ const LoginSignUp = ({ history }) => {
 /* Creating a reference to the alert function. */
     const alert = useAlert();
 
+/* Creating a reference to the navigate function. */
     let navigate = useNavigate();
 
+/* Creating a reference to the searchParams object. */
+    const [searchParams, setSearchParams] = useSearchParams();
+/* Getting the value of the redirect key from the url. */
+    const redirect = searchParams.get('redirect'); // redirect is url key and value is the value from url. so, redirect = shipping
+
+/* Destructuring the state object and creating references to the error, loading,
+and isAuthenticated properties of the state object. */
     const { error, loading, isAuthenticated } = useSelector(state => state.user);
 
 /* The above code is creating a reference to the loginTab element. */
@@ -124,6 +133,8 @@ that is being changed to the new object. */
     };
     
 
+    // const redirect = location.search ? location.search.split("=")[1] : '/account';
+    
     useEffect(() => {
         /* Checking to see if there is an error. If there is, then it is
         displaying the error message and then dispatching the clearErrors()
@@ -136,8 +147,12 @@ that is being changed to the new object. */
         if(isAuthenticated){
             // history.push('/account');
             navigate('/account');
+            if(redirect === 'shipping'){
+                navigate('/cart');
+            }
+
         }
-    }, [dispatch, error, alert, history, isAuthenticated, navigate]);
+    }, [dispatch, error, alert, history, isAuthenticated, navigate, redirect]);
     
 
     /**
