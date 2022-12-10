@@ -11,14 +11,23 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import { Country, State } from 'country-state-city';
 import { useAlert } from 'react-alert';
-// import {}
+import CheckoutSteps from '../Cart/CheckoutSteps';
+import { useNavigate } from 'react-router-dom';
 
 
-const Shipping = () => {
+const Shipping = ({ history }) => {
 
+/* A hook that allows you to dispatch actions to the Redux store. */
     const dispatch = useDispatch();
+/* A hook that allows you to show alerts. */
     const alert = useAlert();
+/* Destructuring the shippingInfo from the state.cart. */
     const { shippingInfo } = useSelector((state) => state.cart);
+
+/* A hook that allows you to navigate to a different route. */
+    const navigate = useNavigate();
+
+
 
     const [address, setAddress] = useState(shippingInfo.address);
     const [city, setCity] = useState(shippingInfo.city);
@@ -28,13 +37,24 @@ const Shipping = () => {
     const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
     
     
-    const shippingSubmit = () => {};
+    const shippingSubmit = (e) => {
+        e.preventDefault();
+
+        if(phoneNo.length < 11 || phoneNo.length > 11){
+            alert.error('Please enter a valid phone number');
+            return;
+        }
+        dispatch(
+            saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
+        );
+        navigate('/order/confirm');
+    };
     
   return (
     <>
         <MetaData title='Shipping Details' />
 
-        {/* <CheckoutSteps activeStep={0} /> */}
+        <CheckoutSteps activeStep={0} />
         
         <div className="shippingContainer">
             <div className="shippingBox">
