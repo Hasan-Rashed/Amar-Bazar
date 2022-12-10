@@ -20,6 +20,7 @@ import UpdatePassword from './component/User/UpdatePassword';
 import ForgotPassword from './component/User/ForgotPassword';
 import ResetPassword from './component/User/ResetPassword';
 import Cart from './component/Cart/Cart.js';
+import Shipping from './component/Cart/Shipping'
 
 
 
@@ -87,6 +88,17 @@ function App() {
         <Route exact path="/login" element={ <LoginSignUp /> } />
 
         <Route exact path="/cart" element={ <Cart /> } />
+
+
+        <Route
+          path="/shipping"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Shipping />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
       <Footer />
     </Router>

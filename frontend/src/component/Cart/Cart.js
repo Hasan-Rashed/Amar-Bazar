@@ -7,6 +7,7 @@ import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import MetaData from '../layout/MetaData';
 
 
 
@@ -83,6 +84,7 @@ const Cart = ({ history }) => {
     
   return (
     <>
+        <MetaData title='Shopping Cart' />
 
         {cartItems.length === 0 ? (
             <div className="emptyCart">
