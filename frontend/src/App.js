@@ -22,6 +22,7 @@ import ResetPassword from './component/User/ResetPassword';
 import Cart from './component/Cart/Cart.js';
 import Shipping from './component/Cart/Shipping'
 import ConfirmOrder from './component/Cart/ConfirmOrder';
+import OrderSuccess from './component/Cart/OrderSuccess';
 
 
 
@@ -106,6 +107,15 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <ConfirmOrder />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/success"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <OrderSuccess />
             </ProtectedRoute>
           }
         />

@@ -4,7 +4,7 @@ errors:
 3:22:56 -> mongoose duplicate key error (couldnot write)
 11:16:04 -> (frontend) didn't write code for stripe payment .
 
-time: 10:37:30
+time: 11:38:03
 
 backend: 
 	1) app.js

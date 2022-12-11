@@ -42,7 +42,8 @@ be 0, otherwise it will be 200. */
 
 /* Storing the order information in the session storage. */
         sessionStorage.setItem('orderInfo', JSON.stringify(data));
-        navigate('/process/payment');
+        // navigate('/process/payment');
+        navigate('/success');
     }
     
     
@@ -120,7 +121,8 @@ be 0, otherwise it will be 200. */
                         <span>৳{totalPrice}</span>
                     </div>
 
-                    <button onClick={proceedToPayment}>Proceed To Payment</button>
+                    {/* <button onClick={proceedToPayment}>Proceed To Payment</button> */}
+                    <button onClick={proceedToPayment}>Cash On Delivery</button>
                 </div>
             </div>
         </div>
