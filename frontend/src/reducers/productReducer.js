@@ -5,6 +5,10 @@ import {
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_FAIL,
     PRODUCT_DETAILS_SUCCESS,
+    NEW_REVIEW_REQUEST,
+    NEW_REVIEW_SUCCESS,
+    NEW_REVIEW_RESET,
+    NEW_REVIEW_FAIL,
     CLEAR_ERRORS
 } from '../constants/productConstants.js';
 
@@ -129,3 +133,49 @@ export const productDetailsReducer = (state = { product: {} }, action) => { /* S
             return state;
     }
 };
+
+
+
+
+// New Product Reducer
+/**
+ * It takes in a state and an action, and returns a new state based on the action
+ * @param [state] - This is the initial state of the reducer.
+ * @param action - This is the action that is dispatched from the component.
+ */
+
+
+
+export const newReviewReducer = (state = {}, action) => {
+    switch (action.type) {
+      case NEW_REVIEW_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
+      case NEW_REVIEW_SUCCESS:
+        return {
+          loading: false,
+          success: action.payload,
+        };
+      case NEW_REVIEW_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
+      case NEW_REVIEW_RESET:
+        return {
+          ...state,
+          success: false,
+        };
+      case CLEAR_ERRORS:
+        return {
+          ...state,
+          error: null,
+        };
+      default:
+        return state;
+    }
+  };
+  

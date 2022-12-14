@@ -28,6 +28,7 @@ import axios from 'axios';
 import Payment from './component/Cart/Payment';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import OrderDetails from './component/Order/OrderDetails';
 
 
 
@@ -152,6 +153,15 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <MyOrders />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <OrderDetails />
             </ProtectedRoute>
           }
         />

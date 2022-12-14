@@ -101,6 +101,9 @@ const MyOrders = () => {
     dispatch(myOrders());
   }, [dispatch, alert, error]);
   
+  
+  
+ /* Returning the JSX code. */
   return (
     <>
         <MetaData title={`${user.name} - Order`} />

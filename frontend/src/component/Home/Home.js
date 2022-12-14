@@ -4,7 +4,7 @@ import { CgMouse } from 'react-icons/cg';
 import Loader from '../layout/Loader/Loader';
 import MetaData from '../layout/MetaData';
 import './Home.css';
-import Product from './ProductCard';
+import ProductCard from './ProductCard';
 
 /* Importing the getProduct function from the productAction.js file. */
 import { clearErrors, getProduct } from '../../actions/productAction';
@@ -68,7 +68,7 @@ const Home = () => {
             component. */}
                                 {products && products.map((product, index) => (
                                     /* Passing the product object to the Product component. */
-                                    <Product key={index} product={product} />
+                                    <ProductCard key={index} product={product} />
                                 ))}
 
                             </div>
