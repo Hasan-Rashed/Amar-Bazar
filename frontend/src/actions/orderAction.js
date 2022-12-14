@@ -10,7 +10,13 @@ import {
 
 import axios from "axios";
 
+
+
 // Create Order
+/**
+ * It creates a new order
+ * @param order - This is the order object that we want to create.
+ */
 export const createOrder = (order) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_ORDER_REQUEST });
@@ -31,7 +37,14 @@ export const createOrder = (order) => async (dispatch) => {
   }
 };
 
+
+
+
 // My Orders
+/**
+ * It makes a request to the server to get the orders of the current user and then
+ * dispatches an action with the response data
+ */
 export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
@@ -47,7 +60,13 @@ export const myOrders = () => async (dispatch) => {
   }
 };
 
+
+
+
 // Get All Orders (admin)
+/**
+ * It dispatches an action to the reducer to update the state of the application
+ */
 export const getAllOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
@@ -63,7 +82,16 @@ export const getAllOrders = () => async (dispatch) => {
   }
 };
 
+
+
+
 // Update Order
+/**
+ * It takes in an order id and an order object, and then it makes a PUT request to
+ * the server to update the order
+ * @param id - The id of the order to be updated
+ * @param order - The order object that we want to update.
+ */
 export const updateOrder = (id, order) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ORDER_REQUEST });
@@ -88,7 +116,15 @@ export const updateOrder = (id, order) => async (dispatch) => {
   }
 };
 
+
+
+
+
 // Delete Order
+/**
+ * It dispatches an action to delete an order from the database
+ * @param id - The id of the order to be deleted.
+ */
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
@@ -104,7 +140,17 @@ export const deleteOrder = (id) => async (dispatch) => {
   }
 };
 
+
+
+
+
 // Get Order Details
+/**
+ * It dispatches an action to the reducer to set the loading state to true, then it
+ * makes an API call to get the order details, and finally it dispatches an action
+ * to the reducer to set the loading state to false and to set the order details
+ * @param id - The id of the order we want to get the details of.
+ */
 export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
@@ -120,7 +166,13 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 };
 
+
+
 // Clearing Errors
+/**
+ * It takes in a dispatch function as an argument, and then dispatches an action
+ * object with a type of CLEAR_ERRORS
+ */
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };

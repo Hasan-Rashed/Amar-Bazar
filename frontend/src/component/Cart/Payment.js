@@ -37,14 +37,20 @@ const Payment = ({ history }) => {
 
   const navigate = useNavigate();
 
+/* Destructuring the shippingInfo and cartItems from the state. */
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+/* Destructuring the user from the state. */
   const { user } = useSelector((state) => state.user);
+/* Destructuring the error from the state. */
   const { error } = useSelector((state) => state.newOrder);
 
+  /* This is the amount that will be charged to the customer. */
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
   };
 
+
+  /* Creating an object with the order details. */
   const order = {
     shippingInfo,
     orderItems: cartItems,
@@ -54,6 +60,13 @@ const Payment = ({ history }) => {
     totalPrice: orderInfo.totalPrice,
   };
 
+
+  /**
+   * It takes the payment data from the form and sends it to the server, where it
+   * is processed by Stripe and then the payment is confirmed
+   * @param e - The event object
+   * @returns The paymentIntent object.
+   */
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -116,6 +129,9 @@ const Payment = ({ history }) => {
     }
   };
 
+
+  /* This is a react hook that is used to perform side effects. It is called after
+  every render. */
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -123,6 +139,9 @@ const Payment = ({ history }) => {
     }
   }, [dispatch, error, alert]);
 
+
+
+  /* Returning the JSX code. */
   return (
     <Fragment>
       <MetaData title="Payment" />

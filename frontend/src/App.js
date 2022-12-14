@@ -126,15 +126,6 @@ function App() {
           }
         />
 
-        {/* <Route
-          path="/process/payment"
-          element={
-            <Elements stripe={stripePromise} options={options}>
-                <Payment />
-            </Elements>
-          }
-        /> */}
-
         <Route
           path="/process/payment"
           element={

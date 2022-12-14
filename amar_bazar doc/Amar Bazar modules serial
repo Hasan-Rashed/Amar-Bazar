@@ -6,6 +6,10 @@ errors:
 
 time: 11:38:03
 
+
+strpe card number for visa: 4000003560000008
+
+
 backend: 
 	1) app.js
 	2) server.js
