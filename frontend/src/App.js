@@ -29,6 +29,8 @@ import Payment from './component/Cart/Payment';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import OrderDetails from './component/Order/OrderDetails';
+import Dashboard from './component/admin/Dashboard';
+
 
 
 
@@ -162,6 +164,17 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <OrderDetails />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Dashboard />
             </ProtectedRoute>
           }
         />
