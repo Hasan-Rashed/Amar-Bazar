@@ -69,6 +69,20 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
 
 
+// Get all product (Admin)
+/* Used to get all the products in the database. */
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+    const products = await Product.find()
+    
+    /* Sending a response to the client. */
+    res.status(200).json({
+        success: true,
+        products,
+    });
+});
+
+
+
 
 // GET Product details
 /* catchAsyncErrors A middleware function that is used to handle errors of async functions. */

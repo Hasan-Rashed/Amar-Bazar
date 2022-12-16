@@ -2,6 +2,9 @@ import {
     ALL_PRODUCT_FAIL,
     ALL_PRODUCT_REQUEST,
     ALL_PRODUCT_SUCCESS,
+    ADMIN_PRODUCT_REQUEST,
+    ADMIN_PRODUCT_SUCCESS,
+    ADMIN_PRODUCT_FAIL,
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_FAIL,
     PRODUCT_DETAILS_SUCCESS,
@@ -29,6 +32,7 @@ export const productReducer = (state = { products: [] }, action) => { /* Setting
         /* Setting the loading state to true and setting the product state to an
         empty array. */
         case ALL_PRODUCT_REQUEST:
+          case ADMIN_PRODUCT_REQUEST:
             
             /* Returning an object with two properties. */
             return {
@@ -49,9 +53,17 @@ export const productReducer = (state = { products: [] }, action) => { /* Setting
                 filteredProductsCount: action.payload.filteredProductsCount
             };
 
+            case ADMIN_PRODUCT_SUCCESS:
+              return {
+                loading: false,
+                products: action.payload
+              }
+            
+
         /* Setting the loading state to false and setting the error state to the
         error message. */
         case ALL_PRODUCT_FAIL:
+          case ADMIN_PRODUCT_FAIL:
             
             /* Returning an object with two properties. */
             return {

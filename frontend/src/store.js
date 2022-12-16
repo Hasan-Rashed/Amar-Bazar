@@ -28,7 +28,15 @@ const reducer = combineReducers({
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
     orderDetails: orderDetailsReducer,
-    newReview: newReviewReducer
+    newReview: newReviewReducer,
+    // newProduct: newProductReducer,
+    product: productReducer,
+    // allOrders: allOrdersReducer,
+    // order: orderReducer,
+    // allUsers: allUsersReducer,
+    // userDetails: userDetailsReducer,
+    // productReviews: productReviewsReducer,
+    // review: reviewReducer,
 });
 
 
