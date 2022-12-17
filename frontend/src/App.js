@@ -31,6 +31,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import OrderDetails from './component/Order/OrderDetails';
 import Dashboard from './component/Admin/Dashboard';
 import ProductList from './component/Admin/ProductList';
+import NewProduct from './component/Admin/NewProduct';
 
 
 
@@ -185,6 +186,15 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <ProductList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/product"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <NewProduct />
             </ProtectedRoute>
           }
         />
