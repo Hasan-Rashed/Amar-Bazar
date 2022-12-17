@@ -9,7 +9,9 @@ import {
     ADMIN_PRODUCT_FAIL,
     NEW_PRODUCT_REQUEST,
     NEW_PRODUCT_SUCCESS,
-    NEW_PRODUCT_RESET,
+    DELETE_PRODUCT_REQUEST,
+    DELETE_PRODUCT_SUCCESS,
+    DELETE_PRODUCT_FAIL,
     NEW_PRODUCT_FAIL,
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_FAIL,
@@ -122,6 +124,39 @@ export const getAdminProduct = () => async (dispatch) => {
   };
   
   
+  
+
+// Delete Product
+/**
+ * It dispatches an action to the reducer, which then updates the state
+ * @param id - The id of the product to be deleted.
+ */
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_PRODUCT_REQUEST });
+
+/* Getting the data from the server. */
+    const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+  
+
+  // Get Product Details
+/**
+ * The function is getting the product details from the server and sending it to
+ * the reducer
+ * @param id - The id of the product.
+ */
 export const getProductDetails = (id) => async (dispatch) => {
     
     try {

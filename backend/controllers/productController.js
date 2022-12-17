@@ -173,6 +173,13 @@ exports.deleteProduct = async (req, res, next) => {
         return next(new ErrorHandler('Product not found', 404)); // next is a callback function
     }
 
+
+    // Deleting Images from cloudinary
+    for (let i = 0; i < product.images.length; i++) {
+/* Used to delete the images of a product from cloudinary. */
+        await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+    }
+
 /* Deleting the product. */
     await product.remove();
 

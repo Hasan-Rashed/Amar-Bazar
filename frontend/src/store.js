@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productReducer, productDetailsReducer, newReviewReducer, newProductReducer } from './reducers/productReducer';
+import { productReducer, productDetailsReducer, newReviewReducer, newProductReducer, productsReducer } from './reducers/productReducer';
 import { profileReducer, userReducer, forgotPasswordReducer } from './reducers/userReducer';
 import { cartReducer } from './reducers/cartReducer';
 import { myOrdersReducer, newOrderReducer, orderDetailsReducer } from './reducers/orderReducer';
@@ -16,7 +16,7 @@ import { myOrdersReducer, newOrderReducer, orderDetailsReducer } from './reducer
 /* Creating a reducer that will be used to create the store. */
 const reducer = combineReducers({
     /* Creating a key called products and assigning it to the productReducer. */
-    products: productReducer,
+    products: productsReducer,
     /* Creating a key called productDetails and assigning it to the
     productDetailsReducer. */
     productDetails: productDetailsReducer,
