@@ -9,7 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { productReducer, productDetailsReducer, newReviewReducer, newProductReducer, productsReducer } from './reducers/productReducer';
 import { profileReducer, userReducer, forgotPasswordReducer } from './reducers/userReducer';
 import { cartReducer } from './reducers/cartReducer';
-import { myOrdersReducer, newOrderReducer, orderDetailsReducer } from './reducers/orderReducer';
+import { allOrdersReducer, myOrdersReducer, newOrderReducer, orderDetailsReducer, orderReducer } from './reducers/orderReducer';
 
 
 
@@ -31,8 +31,8 @@ const reducer = combineReducers({
     newReview: newReviewReducer,
     newProduct: newProductReducer,
     product: productReducer,
-    // allOrders: allOrdersReducer,
-    // order: orderReducer,
+    allOrders: allOrdersReducer,
+    order: orderReducer,
     // allUsers: allUsersReducer,
     // userDetails: userDetailsReducer,
     // productReviews: productReviewsReducer,

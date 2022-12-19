@@ -33,6 +33,8 @@ import Dashboard from './component/Admin/Dashboard';
 import ProductList from './component/Admin/ProductList';
 import NewProduct from './component/Admin/NewProduct';
 import UpdateProduct from './component/Admin/UpdateProduct';
+import OrderList from './component/Admin/OrderList';
+import ProcessOrder from './component/Admin/ProcessOrder';
 
 
 
@@ -205,6 +207,25 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <UpdateProduct />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <OrderList />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/admin/order/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ProcessOrder />
             </ProtectedRoute>
           }
         />
