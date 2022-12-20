@@ -397,7 +397,6 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 /* Finding a user with the id that is passed in the url. */
     const user = await User.findById(req.params.id);
     
-    // we will remove cloudinary later
 
     /* This is checking if the user exists. If not, then it will return an error. */
     if(!user){
@@ -405,6 +404,13 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     }
 
 
+
+    const imageId = user.avatar.public_id;
+
+    /* Deleting the image from the cloudinary. */
+    await cloudinary.v2.uploader.destroy(imageId);
+
+    
 /* Removing the user from the database. */
     await user.remove();
 
