@@ -36,6 +36,7 @@ import UpdateProduct from './component/Admin/UpdateProduct';
 import OrderList from './component/Admin/OrderList';
 import ProcessOrder from './component/Admin/ProcessOrder';
 import UsersList from './component/Admin/UsersList';
+import UpdateUser from './component/Admin/UpdateUser';
 
 
 
@@ -236,6 +237,15 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <UsersList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/user/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <UpdateUser />
             </ProtectedRoute>
           }
         />
