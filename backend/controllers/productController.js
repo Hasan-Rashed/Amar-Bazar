@@ -340,8 +340,15 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
         avg += review.rating
     });
 
-    /* Calculating the average rating of the product. */
-    const ratings = avg / reviews.length;
+    let ratings = 0;
+
+    if(reviews.length === 0){
+        ratings = 0;
+    }
+    else{
+        /* Calculating the average rating of the product. */
+        ratings = avg / reviews.length;
+    }
 
     /* Used to get the number of reviews of a product. */
     const numOfReviews = reviews.length;
