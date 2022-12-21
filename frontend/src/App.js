@@ -40,6 +40,7 @@ import UpdateUser from './component/Admin/UpdateUser';
 import ProductReviews from './component/Admin/ProductReviews';
 import Contact from "./component/layout/Contact/Contact";
 import About from "./component/layout/About/About";
+import NotFound from './component/layout/NotFound/NotFound';
 
 
 
@@ -68,6 +69,9 @@ function App() {
     getStripeApiKey();
   }, []);
 
+/* Preventing the right click on the page. */
+  window.addEventListener('contextmenu', (e) => e.preventDefault());
+
   
   return (
     <Router>
@@ -81,6 +85,7 @@ function App() {
         <Route exact path="/products" element={ <Products />} />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/about" element={<About />} />
+        <Route exact path="/*" element={<NotFound />} />
         <Route path="/products/:keyword" element={ <Products />} />
 
         <Route exact path="/search" element={ <Search />} />
