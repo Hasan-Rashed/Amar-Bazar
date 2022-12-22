@@ -2,6 +2,7 @@ const app = require('./app');
 const dotenv = require('dotenv');
 const connectDatabase = require('./config/database')
 const cloudinary = require('cloudinary');
+const path = require('path');
 
 
 /* This is a listener that listens for uncaught exceptions. (console logging without quote) */
@@ -30,6 +31,14 @@ cloudinary.config({
 });
 
 
+// Static files for build app
+/* This is a middleware that is used to serve static files. */
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+/* This is a middleware that is used to serve static files. */
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+})
 
 /* Listening to the port that is specified in the config.env file. */
 const server = app.listen(process.env.PORT, () => {
